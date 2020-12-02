@@ -182,7 +182,7 @@ class WordPressAPI {
   // GET DATA FROM CUSTOM ENDPOINT //
   /// Retrieves data from a given endpoint and resturns a [WPResponse]
   // ***********************************************************
-  Future<WPResponse> getAsyc({
+  Future<WPResponse> getAsync({
     @required String endpoint,
     String namespace,
     Map<String, dynamic> args,
@@ -258,7 +258,7 @@ class WordPressAPI {
   /// Retrieve WordPress Categories
   Future<List<CategorySchema>> getCategories(
       {Map<String, dynamic> args}) async {
-    final res = await getAsyc(endpoint: 'categories', args: args);
+    final res = await getAsync(endpoint: 'categories', args: args);
     return (res.data as List)
         .cast<Map<String, dynamic>>()
         .map((e) => CategorySchema.fromJson(e))
@@ -268,7 +268,7 @@ class WordPressAPI {
   // ***************** COMMENTS **********************/
   /// Retrieve WordPress Commments
   Future<List<CommentSchema>> getComments({Map<String, dynamic> args}) async {
-    final res = await getAsyc(endpoint: 'comments', args: args);
+    final res = await getAsync(endpoint: 'comments', args: args);
     return (res.data as List)
         .cast<Map<String, dynamic>>()
         .map((e) => CommentSchema.fromJson(e))
@@ -277,18 +277,25 @@ class WordPressAPI {
 
   //********************* POSTS *****************/
   /// Retrieve WordPress Posts
-  Future<List<PostSchema>> getPosts({Map<String, dynamic> args}) async {
-    final res = await getAsyc(endpoint: 'posts', args: args);
-    return (res.data as List)
-        .cast<Map<String, dynamic>>()
-        .map((e) => PostSchema.fromJson(e))
-        .toList();
+  // Future<List<PostSchema>> getPosts({Map<String, dynamic> args}) async {
+  //   final res = await getAsync(endpoint: 'posts', args: args);
+  //   return (res.data as List)
+  //       .cast<Map<String, dynamic>>()
+  //       .map((e) => PostSchema.fromJson(e))
+  //       .toList();
+  // }
+
+  //********************* POSTS *****************/
+  /// Retrieve WordPress Posts
+  Future<WPResponse> getPosts({Map<String, dynamic> args}) async {
+    final res = await getAsync(endpoint: 'posts', args: args);
+    return res;
   }
 
   //********************* SEARCH *****************/
   /// Perform a WordPress Search (Defaults to posts search)
   Future<WPResponse> search(String query, {Map<String, dynamic> args}) async {
-    final res = await getAsyc(
+    final res = await getAsync(
       endpoint: 'search',
       args: {
         "search": query,
@@ -300,7 +307,7 @@ class WordPressAPI {
   // ************************* TAGS ************************** /
   /// Retrieve WordPress Tags
   Future<List<TagSchema>> getTags({Map<String, dynamic> args}) async {
-    final res = await getAsyc(endpoint: 'tags', args: args);
+    final res = await getAsync(endpoint: 'tags', args: args);
     return (res.data as List)
         .cast<Map<String, dynamic>>()
         .map((e) => TagSchema.fromJson(e))
@@ -311,7 +318,7 @@ class WordPressAPI {
   /// Retrieve WordPress Taxonomies
   Future<List<TaxonomySchema>> getTaxonomies(
       {Map<String, dynamic> args}) async {
-    final res = await getAsyc(endpoint: 'taxonomies', args: args);
+    final res = await getAsync(endpoint: 'taxonomies', args: args);
     return (res.data as List)
         .cast<Map<String, dynamic>>()
         .map((e) => TaxonomySchema.fromJson(e))
@@ -321,7 +328,7 @@ class WordPressAPI {
   // ************************** USERS *********************** /
   /// Retrieve WordPress Users
   Future<List<UserSchema>> getUsers({Map<String, dynamic> args}) async {
-    final res = await getAsyc(endpoint: 'users', args: args);
+    final res = await getAsync(endpoint: 'users', args: args);
     return (res.data as List)
         .cast<Map<String, dynamic>>()
         .map((e) => UserSchema.fromJson(e))
